@@ -1,0 +1,11 @@
+Bismillah
+
+Insha allah
+create slack like channel
+auto search
+ arrow up, down, enter to select, esc to cancel
+---
+channel is file here
+collaborate edit
+---
+ 
