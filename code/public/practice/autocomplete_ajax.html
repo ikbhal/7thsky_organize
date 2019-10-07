@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang = "en">
+   <head>
+      <meta charset = "utf-8">
+      <title>jQuery UI Autocomplete functionality</title>
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <link rel="stylesheet" href="/css/organize.css">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      <!-- Javascript -->
+      <script>
+        var currentChannelName = "";
+         $(function() {
+            $( "#autocomplete-5" ).autocomplete({
+               source: "http://localhost:3000/search",
+               minLength: 2,
+               select: function( event, ui ) {
+                //   $( "#project" ).val( ui.item.label );
+                //   $( "#project-id" ).val( ui.item.value );
+                //   $( "#project-description" ).html( ui.item.desc );
+                console.log("ui", ui);
+                var channelName = ui.item.value;
+                console.log("channelName", channelName);
+                getChannelByName(channelName);
+                
+                return false;
+               }
+            });
+
+            $('#line').keypress(function(event){
+                //console.log(event);
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13'){
+                    // ajax post ,json body, call back, path 
+                    var line = $("#line").val();
+                    if(!line){
+                        alert("please fill line");
+                        return;
+                    }
+                    console.log("line in input  ", line);
+                    if(currentChannelName) {
+                        $.post('/channels/'+currentChannelName+ '/lines',
+                         {name: currentChannelName, line: line}, 
+                         function(data){
+                             console.log("append line response", data);
+                         });
+                    }
+                    
+                }
+            });
+
+         });
+
+         function getChannelByName(name) {
+            console.log("get channel by name: ", name);
+            console.log("will make ajax call to get channel");
+            // var currentChannelName = name;
+            currentChannelName = name;
+            $.get('/channels', {name:name}, function (data, textStatus, jqXHR) {
+                //$('p').append(data.firstName);
+                displayChannel(data);
+            });
+            var channel = {name: "students", lines:["vikki", "muneeer"]};
+            return channel;
+         }
+
+         function displayChannel(channel){
+             console.log("display channel", channel);
+             var channelName = channel.name;
+            $("#current_channel_name").html(channelName);
+
+            displayChannelLines(channel);
+            
+         }
+         function displayChannelLines(channel) {
+             console.log("displayChannelLines", channel);
+            var contents = channel.lines.join("<br>");
+            $("#current_channel").html(contents);
+         }
+
+      </script> 
+   </head>
+   
+   <body>
+      <input id = "autocomplete-5" placeholder="channel filter"><br>
+      <label>Channel</label>
+      <span id="current_channel_name">
+
+      </span><br>
+      <label>Contents</label>
+      <div id="current_channel">
+
+      </div>
+      <div id="line">
+        <input type="text" name="line" placeholder="append line"  id="line">
+        <br>
+      </div>
+   </body>
+</html>

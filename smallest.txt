@@ -1,0 +1,15 @@
+Bismillah
+
+Insha allah complete the following
+
+front end only
+1)auto complete jquery
+2)select channel
+---
+font end , backend
+1) mongodb filter by name
+1) rest api
+1) front end autocomplete jquery
+1) dynamic ul>li
+1) select channel > show list of lines
+---
