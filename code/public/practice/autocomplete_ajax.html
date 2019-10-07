@@ -30,46 +30,38 @@
             });
 
 
-            $('#line').keyup(function(e) { 
+            $('textarea').keyup(function(e) { 
                if(e.keyCode == 13) { 
-                  var line = $(this).val();
-                  if(!line){
+                  var value = $(this).val();
+                  var line = value;
+                  console.log("value", value);
+                  if(!value){
                      alert("please fill line");
                      return;
                   }
+
                   console.log("line in input  ", line);
-                  if(currentChannelName) {
-                     $.post('/channels/'+currentChannelName+ '/lines',
-                        {name: currentChannelName, line: line}, 
-                        function(data){
+                  if(currentChannelName) {                    
+                     $.ajax({
+                        url: '/channels/'+currentChannelName+ '/lines',
+                        dataType: 'json',
+                        type: 'post',
+                        contentType: 'application/json',
+                        data: JSON.stringify( {name: currentChannelName, line: line} ),
+                        processData: false,
+                        success: function( data, textStatus, jQxhr ){
                            console.log("append line response", data);
-                        });
+                           displayChannel(data.data);
+                        },
+                        error: function( jqXhr, textStatus, errorThrown ){
+                           console.log( errorThrown );
+                        }
+                     });
                   }
                } 
-            });	
+            });		 
+				
          
-            $('#line').keypress(function(event){
-                //console.log(event);
-                var keycode = (event.keyCode ? event.keyCode : event.which);
-                if(keycode == '13'){
-                    // ajax post ,json body, call back, path 
-                    var line = $("#line").val();
-                    if(!line){
-                        alert("please fill line");
-                        return;
-                    }
-                    console.log("line in input  ", line);
-                    if(currentChannelName) {
-                        $.post('/channels/'+currentChannelName+ '/lines',
-                         {name: currentChannelName, line: line}, 
-                         function(data){
-                             console.log("append line response", data);
-                         });
-                    }
-                    
-                }
-            });
-
          });
 
          function getChannelByName(name) {
@@ -113,7 +105,7 @@
 
       </div>
       <div id="line">
-        <textarea id="line"></textarea> 
+        <textarea ></textarea> 
 
         <br>
       </div>
