@@ -1,0 +1,45 @@
+<!DOCTYPE HTML> 
+<html> 
+	<head> 
+		<title> 
+			Event for user pressing enter 
+			button in a textbox 
+		</title> 
+		
+		<script src = 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"> 
+		</script> 
+	</head> 
+
+	<body style = "text-align:center;"> 
+		
+		<h1 id = "h" style = "color:green;" > 
+			GeeksForGeeks 
+		</h1> 
+		
+		<p id = "GFG_UP" style = 
+			"font-size: 15px; font-weight: bold;"> 
+			click the Enter Key inside the textbox. 
+		</p> 
+		
+		<input type="text" id="line"></textarea> 
+		<br>	 
+		
+		<p id = "GFG_DOWN" style = 
+			"color:green; font-size: 20px; font-weight: bold;"> 
+		</p> 
+		
+		<script> 
+			$('#line').keyup(function(e) { 
+				if(e.keyCode == 13) { 
+                    $(this).trigger("enterKey"); 
+                    console.log("vallue:", $(this).val());
+                    $(this).val("");
+				} 
+			});		 
+			$('#line').on("enterKey", function(e){ 
+				$("#GFG_DOWN").text("Enter key pressed inside textarea"); 
+			});							 
+		</script> 
+	</body> 
+</html>	

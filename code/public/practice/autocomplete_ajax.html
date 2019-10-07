@@ -29,6 +29,25 @@
                }
             });
 
+
+            $('#line').keyup(function(e) { 
+               if(e.keyCode == 13) { 
+                  var line = $(this).val();
+                  if(!line){
+                     alert("please fill line");
+                     return;
+                  }
+                  console.log("line in input  ", line);
+                  if(currentChannelName) {
+                     $.post('/channels/'+currentChannelName+ '/lines',
+                        {name: currentChannelName, line: line}, 
+                        function(data){
+                           console.log("append line response", data);
+                        });
+                  }
+               } 
+            });	
+         
             $('#line').keypress(function(event){
                 //console.log(event);
                 var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -94,7 +113,8 @@
 
       </div>
       <div id="line">
-        <input type="text" name="line" placeholder="append line"  id="line">
+        <textarea id="line"></textarea> 
+
         <br>
       </div>
    </body>

@@ -1,0 +1,48 @@
+<!-- https://www.geeksforgeeks.org/how-to-check-whether-the-enter-key-is-pressed-in-a-textbox-or-not-using-javascript-jquery/ -->
+
+<!DOCTYPE HTML> 
+<html> 
+	<head> 
+		<title> 
+			Event for user pressing enter 
+			button in a textbox 
+		</title> 
+		
+		<script src = 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"> 
+		</script> 
+	</head> 
+
+	<body style = "text-align:center;"> 
+		
+		<h1 id = "h" style = "color:green;" > 
+			GeeksForGeeks 
+		</h1> 
+		
+		<p id = "GFG_UP" style = 
+			"font-size: 15px; font-weight: bold;"> 
+			click the Enter Key inside the textarea. 
+		</p> 
+		
+		<textarea></textarea> 
+		<br>	 
+		
+		<p id = "GFG_DOWN" style = 
+			"color:green; font-size: 20px; font-weight: bold;"> 
+		</p> 
+		
+		<script> 
+			$('textarea').keyup(function(e) { 
+				if(e.keyCode == 13) { 
+					$(this).trigger("enterKey");
+					var value = $(this).val();
+				 
+					console.log("value", value);
+				} 
+			});		 
+			$('textarea').on("enterKey", function(e){ 
+				$("#GFG_DOWN").text("Enter key pressed inside textarea"); 
+			});							 
+		</script> 
+	</body> 
+</html>	
